@@ -17,4 +17,8 @@ public interface MessageInterface extends Remote {
     public void sendMessage(String message) throws RemoteException;
 
     public int add(int a, int b) throws RemoteException;
+
+    public int[] sort(int[] a) throws RemoteException;
+
+    public void sendUser(User user) throws RemoteException;
 }

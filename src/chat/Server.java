@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +28,8 @@ public class Server implements MessageInterface {
             MessageInterface stub = (MessageInterface) UnicastRemoteObject.exportObject(server, 0);
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.bind("MESSAGE_SERVICE", stub);
+        } catch (AccessException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (RemoteException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AlreadyBoundException ex) {
@@ -35,13 +38,24 @@ public class Server implements MessageInterface {
     }
 
     @Override
-    public void sendMessage(String string) throws RemoteException {
+    public synchronized void sendMessage(String string) throws RemoteException {
         System.out.println("Message: " + string);
     }
 
     @Override
-    public int add(int a, int b) throws RemoteException {
+    public synchronized int add(int a, int b) throws RemoteException {
         return a + b;
+    }
+
+    @Override
+    public synchronized int[] sort(int[] a) throws RemoteException {
+        Arrays.sort(a);
+        return a;
+    }
+
+    @Override
+    public synchronized void sendUser(User user) throws RemoteException {
+        System.out.println(user);
     }
 
 }
