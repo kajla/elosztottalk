@@ -5,11 +5,13 @@
  */
 package calculator;
 
+import java.io.Serializable;
+
 /**
  *
  * @author kajla
  */
-public class User {
+public class User implements Serializable {
 
     private long id;
     private String name;

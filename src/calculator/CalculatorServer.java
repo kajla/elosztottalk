@@ -48,7 +48,7 @@ public class CalculatorServer {
 
         @Override
         public synchronized long addUser(User u) throws RemoteException {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("calculator");
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("calculatorPU");
             EntityManager em = emf.createEntityManager();
             USR usr = new USR();
             usr.setName(u.getName());
